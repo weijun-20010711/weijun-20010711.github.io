@@ -1,0 +1,208 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-10-06T13:35:48.5721251+08:00",
+  "title": "Design System: Hoong Wei Jun Portfolio",
+  "extensions": {
+    "source": [
+      "assets/site.css",
+      "assets/clay.css",
+      "assets/site.js",
+      "index.html"
+    ],
+    "extraction": "Current cascade only: clay.css loads last and content HTML forces light. Legacy base dark/green/Manrope declarations and archived motion assets are not canonical.",
+    "typographyMeta": {
+      "display": {
+        "purpose": "Nunito 900, 1.12 leading; responsive clamps documented in DESIGN.md.",
+        "displayName": "Static homepage statement"
+      },
+      "body": {
+        "purpose": "DM Sans 500, 1.65 leading; local variable fonts accompanied by OFL license files.",
+        "displayName": "Body"
+      }
+    },
+    "shadows": [
+      {
+        "name": "clay-card",
+        "value": "16px 16px 32px rgb(160 150 180 / .2), -10px -10px 24px rgb(255 255 255 / .9), inset 6px 6px 12px rgb(139 92 246 / .035), inset -6px -6px 12px rgb(255 255 255 / .95)",
+        "purpose": "Canonical clay material used by the corresponding card, button, pressed or deep-frame surfaces."
+      },
+      {
+        "name": "clay-button",
+        "value": "10px 12px 24px rgb(139 92 246 / .25), -6px -6px 16px rgb(255 255 255 / .55), inset 3px 3px 6px rgb(255 255 255 / .4), inset -4px -4px 8px rgb(39 16 62 / .18)",
+        "purpose": "Canonical clay material used by the corresponding card, button, pressed or deep-frame surfaces."
+      },
+      {
+        "name": "clay-pressed",
+        "value": "inset 8px 8px 16px #d9d4e3, inset -8px -8px 16px #ffffff",
+        "purpose": "Canonical clay material used by the corresponding card, button, pressed or deep-frame surfaces."
+      },
+      {
+        "name": "clay-deep",
+        "value": "24px 24px 48px #d7d0e4, -24px -24px 48px #ffffff, inset 8px 8px 18px rgb(139 92 246 / .05), inset -8px -8px 18px rgb(255 255 255 / .8)",
+        "purpose": "Canonical clay material used by the corresponding card, button, pressed or deep-frame surfaces."
+      }
+    ],
+    "gradients": [
+      {
+        "value": "linear-gradient(135deg, #8751df, #6d28d9)",
+        "purpose": "Primary actions and selected image-stage controls with white text.",
+        "name": "button-gradient"
+      },
+      {
+        "value": "linear-gradient(140deg, #ffe2ee, #d9efff)",
+        "purpose": "Static real-portrait surround.",
+        "name": "portrait-frame"
+      },
+      {
+        "value": "linear-gradient(115deg, var(--ink) 8%, var(--green) 55%, var(--pink))",
+        "purpose": "Desktop second heading line only; mobile solid violet.",
+        "name": "display-emphasis"
+      },
+      {
+        "value": "linear-gradient(145deg, rgb(139 92 246 / .12), rgb(219 39 119 / .08))",
+        "purpose": "Mini-proof surfaces.",
+        "name": "proof-surface"
+      }
+    ],
+    "atmosphere": {
+      "pointerEvents": "none",
+      "size": "60vh; mobile 45vh",
+      "position": "fixed",
+      "opacity": ".11",
+      "colors": [
+        "var(--green)",
+        "var(--pink)",
+        "var(--sky)"
+      ],
+      "motion": "Static",
+      "blur": "64px"
+    },
+    "motion": [
+      {
+        "value": "animation:none!important;transition:none!important",
+        "purpose": "All homepage elements and pseudo-elements; spatial hover/active transforms are explicitly suppressed.",
+        "name": "homepage-static"
+      },
+      {
+        "value": ".2s",
+        "purpose": "Case-page action state transitions only; homepage override disables them.",
+        "name": "case-controls"
+      },
+      {
+        "value": ".4s",
+        "purpose": "Case-page work-card feedback where used; homepage override disables it.",
+        "name": "case-work-card"
+      },
+      {
+        "value": "cubic-bezier(.16, 1, .3, 1)",
+        "purpose": "Inherited easing for allowed case-page interaction feedback.",
+        "name": "ease"
+      }
+    ],
+    "breakpoints": [
+      {
+        "name": "compact-desktop",
+        "value": "1000px"
+      },
+      {
+        "name": "mobile",
+        "value": "720px"
+      },
+      {
+        "name": "small-mobile",
+        "value": "420px"
+      }
+    ],
+    "focus": {
+      "outline": "3px solid var(--green)",
+      "outlineOffset": "5px",
+      "selector": ":focus-visible",
+      "resolvedAccent": "Violet"
+    },
+    "theme": {
+      "switchControl": "Absent",
+      "mode": "Light only",
+      "html": "data-theme=\"light\"",
+      "canonicalStyle": "assets/clay.css"
+    },
+    "constraints": {
+      "landing": "No video, typewriter, animations, transitions or spatial hover movement.",
+      "content": "Keep real portrait, factual projects, original evidence, CV and existing routes.",
+      "interactions": "Native menu, evidence viewer, project selectors and email copying remain available."
+    },
+    "reducedMotion": {
+      "behavior": "Disable animation/transition globally and suppress the explicitly listed work-card/button/hero-action transforms. Homepage is static regardless of preference.",
+      "query": "(prefers-reduced-motion: reduce)"
+    },
+    "componentScope": "Preview snippets show static homepage material. Limited case-page transform/transition behavior is recorded in DESIGN.md and motion extensions."
+  },
+  "components": [
+    {
+      "name": "Primary Action",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Violet-gradient action with readable white text; static homepage presentation.",
+      "html": "<a class=\"ds-primary\" href=\"#work\">Explore my work</a>",
+      "css": ".ds-primary { display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:14px 22px; border:0; border-radius:20px; background:var(--button-gradient); color:#ffffff; font-family:\"DM Sans\",sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; box-shadow:var(--clay-button); } .ds-primary:hover { background:var(--button-gradient); color:#ffffff; } .ds-primary:active { box-shadow:inset 6px 6px 12px rgb(35 10 70 / .45), inset -6px -6px 12px rgb(238 220 255 / .15); } .ds-primary:focus-visible { outline:3px solid var(--green); outline-offset:5px; }"
+    },
+    {
+      "name": "Secondary Action",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Translucent light action with clay button shadow.",
+      "html": "<a class=\"ds-secondary\" href=\"#contact\">Connect</a>",
+      "css": ".ds-secondary { display:inline-flex; align-items:center; justify-content:center; min-height:52px; padding:14px 22px; border:0; border-radius:20px; background:var(--surface); color:var(--ink); font-family:\"DM Sans\",sans-serif; font-size:.85rem; font-weight:700; text-decoration:none; box-shadow:var(--clay-button); } .ds-secondary:hover { background:var(--surface); color:var(--ink); } .ds-secondary:active { box-shadow:var(--clay-pressed); } .ds-secondary:focus-visible { outline:3px solid var(--green); outline-offset:5px; }"
+    },
+    {
+      "name": "Navigation",
+      "kind": "nav",
+      "description": "Light floating clay shell; links use ink and violet current/hover emphasis.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#work\" aria-current=\"location\">Work</a><a href=\"#contact\">Connect</a></nav>",
+      "css": ".ds-nav { display:flex; align-items:center; gap:26px; min-height:76px; padding:0 24px; background:var(--surface); border-radius:32px; box-shadow:var(--clay-card); backdrop-filter:blur(16px); } .ds-nav a { color:var(--ink); font-family:\"DM Sans\",sans-serif; font-size:.85rem; font-weight:700; padding-block:12px; text-decoration:none; } .ds-nav a:hover,.ds-nav a[aria-current] { color:var(--green); text-decoration:underline; text-underline-offset:.22em; } .ds-nav a:focus-visible { outline:3px solid var(--green); outline-offset:5px; }"
+    },
+    {
+      "name": "Tags",
+      "kind": "chip",
+      "description": "Unboxed supporting labels without a selectable state.",
+      "html": "<div class=\"ds-tags\"><span>Project development</span><span>Visual communication</span></div>",
+      "css": ".ds-tags { display:flex; flex-wrap:wrap; gap:8px 20px; color:var(--muted); font-family:\"DM Sans\",sans-serif; font-weight:500; font-size:.75rem; }"
+    },
+    {
+      "name": "Process Step",
+      "kind": "button",
+      "refersTo": "process-step",
+      "description": "Selectable project step with inset selected surface; behavior remains in site.js.",
+      "html": "<button type=\"button\" class=\"ds-process\" aria-pressed=\"true\"><b>01</b><span>Process stage</span></button>",
+      "css": ".ds-process { background:var(--surface); color:var(--ink); border:0; border-radius:24px; box-shadow:var(--clay-button); padding:20px; text-align:left; font-family:\"DM Sans\",sans-serif; font-weight:500; cursor:pointer; } .ds-process[aria-pressed=true] { background:var(--card); box-shadow:var(--clay-pressed); } .ds-process:hover { background:var(--surface); } .ds-process b { color:var(--green); font-size:.8rem; } .ds-process span { display:block; margin-top:24px; font-size:.95rem; font-weight:700; } .ds-process:focus-visible { outline:3px solid var(--green); outline-offset:5px; }"
+    },
+    {
+      "name": "Contact Path",
+      "kind": "card",
+      "refersTo": "contact-path",
+      "description": "Rounded contact destination with card shadow and a supporting label.",
+      "html": "<a class=\"ds-contact\" href=\"#contact\"><small>Contact</small><h3>Get in touch</h3></a>",
+      "css": ".ds-contact { display:block; padding:22px 28px; border:0; border-radius:20px; background:var(--surface); color:var(--ink); box-shadow:var(--clay-card); font-family:\"DM Sans\",sans-serif; font-weight:500; text-decoration:none; } .ds-contact:hover { background:var(--surface); } .ds-contact small { font-size:.75rem; color:var(--green); } .ds-contact h3 { font-family:Nunito,sans-serif; font-size:1.2rem; font-weight:800; letter-spacing:-.025em; line-height:1.25; margin:4px 0 0; } .ds-contact:focus-visible { outline:3px solid var(--green); outline-offset:5px; }"
+    }
+  ],
+  "narrative": {
+    "overview": "The user-pinned clay system makes the portfolio light, vibrant and lively through soft volumes, violet/pink/blue accents, pastel groups and the real person. The homepage is static: the statement “Curious mind. Creative energy. Ideas in action.” appears beside the existing portrait. Professional title, factual projects, original evidence, CV and routes remain the content foundation.",
+    "keyCharacteristics": [
+      "Light lavender ground with charcoal text and violet, pink, blue, mint and amber accents.",
+      "Nunito headings, DM Sans body and large rounded clay surfaces.",
+      "Static homepage personality with useful native menu, evidence and project controls."
+    ],
+    "rules": [],
+    "dos": [
+      "Do keep all pages light and use the canonical clay stylesheet after the base layout stylesheet.",
+      "Do express the homepage's creative personality with the real portrait, typography, color and static clay material.",
+      "Do retain visible violet focus, native controls, working evidence links and factual project content.",
+      "Do use the documented control, card and frame radii with the actual multi-layer shadows."
+    ],
+    "donts": [
+      "Don't reintroduce video, typewriter, animations, transitions or spatial hover movement on the landing page.",
+      "Don't restore a dark theme or theme-switch control.",
+      "Don't promote legacy green, Manrope or pill tokens back into the active clay system.",
+      "Don't invent professional claims, credentials, testimonials or project evidence."
+    ]
+  }
+}
