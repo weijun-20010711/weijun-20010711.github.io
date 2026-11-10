@@ -189,6 +189,35 @@ footer { border: 0; background: var(--surface); border-radius: 32px 32px 0 0; }
 .home .work-card:hover, .home .hero-pill:hover, .home button:active, .home .hero-pill:active, .home .contact-path:hover, .home .smallbtn:hover, .home .btn:hover { transform: none; }
 .home .work-card:hover img, .home .work-card:focus-visible img { transform: none; }
 .case-study .hero-text-only { display: block; max-width: 900px; }
+
+/* A native language control stays available outside the mobile menu. */
+.language-switch { display: flex; align-items: center; flex-shrink: 0; margin-inline-start: auto; }
+.language-switch[hidden] { display: none; }
+.language-label { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }
+.language-switch select { font: inherit; font-size: 1rem; font-weight: 700; color: var(--ink); background: var(--card); border: 1px solid var(--line); border-radius: 20px; min-height: 44px; max-width: 100%; padding: 10px 12px; cursor: pointer; }
+.language-switch select:focus-visible { outline: 3px solid var(--green); outline-offset: 4px; }
+:lang(zh-Hans) { font-family: 'DM Sans', 'PingFang SC', 'Microsoft YaHei', sans-serif; }
+html[lang="zh-Hans"] :is(h1, h2, h3, h4) { font-family: 'Nunito', 'PingFang SC', 'Microsoft YaHei', sans-serif; letter-spacing: 0; line-height: 1.3; }
+html[lang="ms"] :is(h1, h2, h3, h4) { overflow-wrap: anywhere; }
+nav > .wrap { gap: 16px; }
+@media (max-width: 1050px) {
+  .home nav > .wrap > .links { display: none; }
+  .home .mobile-nav { display: block; margin-inline-start: auto; }
+  .home nav > .wrap { position: relative; flex-wrap: nowrap; gap: 8px; }
+  .home .mobile-nav .links { display: flex; }
+  .home .language-switch { margin-inline-start: 0; }
+}
+@media (max-width: 420px) {
+  .language-switch select { padding-inline: 8px; }
+  .home .mobile-nav summary { padding-inline: 6px; }
+  .home nav > .wrap { gap: 4px; }
+}
+@media (max-width: 360px) {
+  .home nav > .wrap { flex-wrap: wrap; padding-block: 8px; }
+  .home .language-switch { flex-basis: 100%; }
+  .home .language-switch select { width: 100%; }
+  .journey-track, .pipeline { grid-template-columns: 1fr; }
+}
 .home :is(button, .hero-pill, .hero-btn, .smallbtn, .btn, .back, .doc-link, .work-card, .contact-path):is(:hover, :active, :focus-visible) { transform: none; }
 @media (max-width: 1000px) {
   .home .immersive-hero { gap: 28px; padding: 32px; }

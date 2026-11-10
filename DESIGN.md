@@ -215,3 +215,9 @@ Case pages retain limited CSS interaction feedback: action hover translateY(-4px
 - Don't invent professional claims, credentials, testimonials or project evidence.
 
 The Content Engine case-study opening uses a text-only hero with a 900px maximum width. Its former hero image is omitted. The Jiazi Village process buttons retain their meaningful 01–07 sequence labels; these must not be removed as decorative numbering.
+
+## Language selection
+
+All five content pages share a native header selector for English, Simplified Chinese and Bahasa Malaysia. It stays outside the mobile menu and uses the existing card fill, ink text, line border, 20px control radius and violet focus ring. Text is 1rem with a 44px minimum control height. Homepage navigation uses its native mobile menu at 1050px and below to allow longer translated links. At 360px and below, the language selector occupies its own row. Chinese headings use Nunito with PingFang SC/Microsoft YaHei fallbacks, zero tracking and 1.3 line height; Malay headings may wrap long words. These additions retain the existing light, static clay presentation.
+
+The selected language updates text nodes, descriptions, metadata and interactive data strings without rebuilding controls. Current project stages and image selection remain intact. The CV, original artwork and evidence documents remain in their source languages.
