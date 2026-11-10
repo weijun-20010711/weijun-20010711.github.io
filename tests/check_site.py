@@ -2,6 +2,7 @@ from pathlib import Path
 from html.parser import HTMLParser
 from urllib.parse import unquote, urlsplit
 import re
+import json
 
 ROOT = Path(__file__).resolve().parents[1]
 
@@ -10,10 +11,19 @@ class Page(HTMLParser):
         super().__init__()
         self.ids, self.refs, self.images, self.buttons = [], [], [], []
         self.headings = 0
+        self.copy = []
+        self.skip = 0
         self.feed(text)
 
     def handle_starttag(self, tag, attrs):
         attrs = dict(attrs)
+        if tag in ('script', 'style', 'option'):
+            self.skip += 1
+        for name, value in attrs.items():
+            if name in ('alt', 'aria-label', 'data-title', 'data-copy', 'data-stage', 'data-proof1', 'data-proof2', 'data-proof3', 'data-alt'):
+                self.copy.append(value)
+            if tag == 'meta' and name == 'content' and (attrs.get('name') in ('description', 'twitter:title', 'twitter:description') or attrs.get('property') in ('og:title', 'og:description')):
+                self.copy.append(value)
         if 'id' in attrs:
             self.ids.append(attrs['id'])
         if tag == 'h1':
@@ -26,14 +36,32 @@ class Page(HTMLParser):
         if tag == 'button':
             self.buttons.append(attrs)
 
+    def handle_endtag(self, tag):
+        if tag in ('script', 'style', 'option'):
+            self.skip -= 1
+
+    def handle_data(self, text):
+        if not self.skip:
+            self.copy.append(text)
+
 def check():
     files = [ROOT / 'index.html', *ROOT.glob('projects/*.html')]
     pages = {path.resolve(): Page(path.read_text(encoding='utf-8')) for path in files}
     errors = []
+    dictionary = json.loads((ROOT / 'assets/translations.js').read_text(encoding='utf-8').split('window.portfolioTranslations = ', 1)[1].rstrip(';\n'))
     for path, page in pages.items():
         text = path.read_text(encoding='utf-8')
         if 'http-equiv="refresh"' in text:
             continue
+        if page.ids.count('site-language') != 1:
+            errors.append(f'{path.name}: expected one language selector')
+        for source in page.copy:
+            source = re.sub(r'\s+', ' ', source).strip()
+            if re.search('[A-Za-z]', source) and source not in dictionary:
+                errors.append(f'{path.name}: missing translation: {source}')
+        script_order = [text.find(f'assets/{name}.js') for name in ('translations', 'site', 'i18n')]
+        if any(position < 0 for position in script_order) or script_order != sorted(script_order):
+            errors.append(f'{path.name}: incorrect language script order')
         if page.headings != 1:
             errors.append(f'{path.name}: expected one h1')
         if len(page.ids) != len(set(page.ids)):

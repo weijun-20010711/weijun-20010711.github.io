@@ -1,5 +1,7 @@
 'use strict';
 
+const translate = (source, variables) => window.portfolioI18n?.t(source, variables) ?? source;
+
 document.querySelectorAll('.mobile-nav a').forEach(link => {
   link.addEventListener('click', () => { link.closest('details').open = false; });
 });
@@ -15,6 +17,10 @@ function bindSelection(selector, update) {
     });
     update(button.dataset);
   }));
+  window.addEventListener('portfolio-languagechange', () => {
+    const selected = buttons.find(button => button.classList.contains('active'));
+    if (selected) update(selected.dataset, true);
+  });
 }
 
 function setText(id, value) {
@@ -31,9 +37,9 @@ bindSelection('.flow-step', data => {
   setText('flow-copy', data.copy);
   ['1', '2', '3'].forEach(number => setText(`proof-${number}`, data[`proof${number}`]));
 });
-bindSelection('.stage-btn', data => {
+bindSelection('.stage-btn', (data, languageOnly = false) => {
   const image = document.getElementById('garden-image');
-  image.src = data.img;
+  if (!languageOnly) image.src = data.img;
   image.alt = data.alt;
   if (image.parentElement.matches('a')) image.parentElement.href = data.img;
 });
@@ -63,21 +69,30 @@ if (imageLinks.length && typeof HTMLDialogElement !== 'undefined') {
   const status = viewer.querySelector('.image-status');
   let current = 0;
   let returnFocus;
+  let statusMessage = '';
+
+  function refreshViewer() {
+    const alt = imageLinks[current].querySelector('img').alt;
+    setText('viewer-caption', translate('{alt} ({current} of {total})', {
+      alt, current: current + 1, total: imageLinks.length
+    }));
+    image.alt = alt;
+    status.textContent = translate(statusMessage);
+  }
 
   function show(index) {
     current = (index + imageLinks.length) % imageLinks.length;
     const link = imageLinks[current];
-    const alt = link.querySelector('img').alt;
-    setText('viewer-caption', `${alt} (${current + 1} of ${imageLinks.length})`);
-    image.alt = alt;
-    status.textContent = 'Loading full-size image…';
+    statusMessage = 'Loading full-size image…';
+    refreshViewer();
     image.src = link.href;
     viewer.querySelector('a').href = link.href;
   }
 
-  image.addEventListener('load', () => { status.textContent = ''; });
+  image.addEventListener('load', () => { statusMessage = ''; status.textContent = ''; });
   image.addEventListener('error', () => {
-    status.textContent = 'The preview could not load. Open the original image below or choose another image.';
+    statusMessage = 'The preview could not load. Open the original image below or choose another image.';
+    status.textContent = translate(statusMessage);
   });
   imageLinks.forEach((link, index) => link.addEventListener('click', event => {
     if (event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
@@ -99,6 +114,9 @@ if (imageLinks.length && typeof HTMLDialogElement !== 'undefined') {
     }
   });
   viewer.addEventListener('close', () => returnFocus?.focus());
+  window.addEventListener('portfolio-languagechange', () => {
+    if (viewer.open) refreshViewer();
+  });
 }
 
 // Section navigation uses visibility rather than a per-frame scroll listener.
@@ -131,13 +149,16 @@ if (sectionLinks.length && 'IntersectionObserver' in window) {
 const emailCopy = document.querySelector('.email-copy');
 if (emailCopy) {
   emailCopy.hidden = false;
+  let feedback = '';
+  const status = document.querySelector('.hero-feedback');
+  window.addEventListener('portfolio-languagechange', () => { status.textContent = translate(feedback); });
   emailCopy.addEventListener('click', async () => {
-    const status = document.querySelector('.hero-feedback');
     try {
       await navigator.clipboard.writeText('weijunhoong@gmail.com');
-      status.textContent = 'Email copied: weijunhoong@gmail.com';
+      feedback = 'Email copied: weijunhoong@gmail.com';
     } catch {
-      status.textContent = 'Copy was unavailable. Use the email link above.';
+      feedback = 'Copy was unavailable. Use the email link above.';
     }
+    status.textContent = translate(feedback);
   });
 }
